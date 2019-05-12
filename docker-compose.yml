@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  web:
+    image: flxxyz/alpine-nginx-php7:latest
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./data/conf/nginx:/etc/nginx/conf.d
+      - ./data/conf/php:/etc/php7
+      - ./data/site:/data/site
+      - ./data/log:/var/lib/nginx/logs
+      - ./data/log:/var/log/nginx

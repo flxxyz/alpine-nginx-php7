@@ -1,5 +1,4 @@
 <?php
-echo 'hello alpine-nginx-php7';
 
 function ping($ip){
   $ip_port = explode(':', $ip);
@@ -19,6 +18,8 @@ function ping($ip){
   return $ok;
 } 
 
-if (ping('172.16.1.51:8080')) {
-  echo '<br>与数据库通信正常';
+$host = $_GET['host'];
+
+if (ping($host)) {
+  echo '与'.$host.'通信正常';
 }

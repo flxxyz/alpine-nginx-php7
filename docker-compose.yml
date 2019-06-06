@@ -6,6 +6,7 @@ services:
     ports:
       - 80:80
       - 443:443
+      - 7070:7070
     volumes:
       - ./data/conf/nginx:/etc/nginx
       - ./data/conf/php:/etc/php7

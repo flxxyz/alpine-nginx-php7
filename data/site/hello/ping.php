@@ -22,4 +22,6 @@ $host = $_GET['host'];
 
 if (ping($host)) {
   echo '与'.$host.'通信正常';
+} else {
+  echo '不支持的ping地址';
 }

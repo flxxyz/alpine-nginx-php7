@@ -5,8 +5,8 @@ server
 	root 此处填写目录;
 	index index.html index.htm index.php;
 
-	include /data/nginx/common.conf;
-	include /data/nginx/php.conf;
+	include /data/conf/nginx/common.conf;
+	include /data/conf/nginx/php.conf;
 
 	access_log /data/log/此处填写友好的配置名称.log;
 }

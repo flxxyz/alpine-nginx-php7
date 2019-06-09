@@ -12,8 +12,8 @@ ENV PATH $PATH:/root/go/bin
 
 COPY data/conf/supervisord.conf /data/conf/supervisord.conf
 COPY data/conf/nginx/nginx.conf /etc/nginx/nginx.conf
-COPY data/conf/php7/php.ini /etc/php7/php.ini
-COPY data/conf/php7/php-fpm.conf /etc/php7/php-fpm.conf
+COPY data/conf/php/php.ini /etc/php7/php.ini
+COPY data/conf/php/php-fpm.conf /etc/php7/php-fpm.conf
 
 RUN go version; \
     git config --global http.sslVerify false; \

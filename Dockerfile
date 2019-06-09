@@ -20,7 +20,7 @@ RUN go version; \
     go get -u -v -ldflags "-s -w" github.com/yudai/gotty; \
     rm -rf /root/go/src /root/go/pkg /var/cache/apk /usr/share/man /var/cache/apk/* /tmp/*; \
     apk del git go; \
-    ls /data /data/nginx /data/site /data/conf/nginx;
+    ls /data;
 
 CMD ["/usr/bin/supervisord", "-c", "/data/conf/supervisord.conf"]
 

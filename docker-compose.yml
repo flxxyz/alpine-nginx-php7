@@ -9,7 +9,6 @@ services:
       - 7070:7070
     volumes:
       - ./data/conf/nginx:/data/conf/nginx
-      - ./data/conf/php/conf.d:/etc/php7/conf.d
       - ./data/site:/data/site
       - ./data/log:/data/log
     ulimits:

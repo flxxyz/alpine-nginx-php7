@@ -1,5 +1,5 @@
 ### 使用
-拉取镜像
+拉取镜像 (也可以直接使用配置启动，会自己拉取镜像)
 ```
 docker push flxxyz/alpine-nginx-php7
 ```

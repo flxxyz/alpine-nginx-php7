@@ -16,6 +16,8 @@ docker-compose up -d
 
 配置项均放在`data`目录下
 
+为了方便管理，集成了[gotty](https://github.com/yudai/gotty)，在浏览器环境操作容器shell，访问端口`7070`，`docker-compose.yml`自行修改，或者直接代理该端口服务
+
 ### 配置实例时使用的版本
 #### docker
 version: 18.09.5

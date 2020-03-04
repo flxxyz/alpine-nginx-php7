@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>默认站点 - flxxyz/alpine-nginx-php7</title>
+</head>
+<body>
+    <div>
+        <h2>alpine-nginx-php7</h2>
+        <p>docker php多站点环境</p>
+        <div>
+            <p>
+<pre><code>
+# 添加到docker-compose.yml
+站点名称:
+    restart: always
+    build: ./fpm
+    volumes:
+      - ./wwwroot/站点名称:/var/www/html
+    networks:
+      - site
+</code>
+<code>
+# 新建 站点名称.conf 文件到conf目录
+server
+{
+    listen 80;
+    server_name example.com;  #注意修改域名
+    root /usr/share/nginx/html/站点名称;
+    index index.html index.htm index.php;
+
+    #也可以新建 站点名称.rule 文件到conf/rule.d目录统一管理
+    #include /etc/nginx/conf.d/rule.d/站点名称.rule;
+
+    location ~ \.php$
+    {
+        fastcgi_pass  站点名称:9000;
+        fastcgi_index index.php;
+        include       fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME /var/www/html/$fastcgi_script_name;
+    }
+           
+    error_log /var/log/nginx/站点名称.error.log;
+    access_log /var/log/nginx/站点名称.access.log;
+}
+    </code></pre>
+</p>
+        </div>
+        <p>Link: <a href="https://github.com/flxxyz/alpine-nginx-php7">flxxyz/alpine-nginx-php7</a></p>
+    </div>
+</body>
+</html>

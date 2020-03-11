@@ -15,7 +15,7 @@
 # 添加到docker-compose.yml
 站点名称:
     restart: always
-    build: ./fpm
+    image: flxxyz/php:7.3-fpm
     volumes:
       - ./wwwroot/站点名称:/var/www/html
     networks:

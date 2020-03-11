@@ -16,7 +16,7 @@ docker-compose up -d
 ```
 站点名称:
     restart: always
-    build: ./fpm
+    image: flxxyz/php:7.3-fpm
     volumes:
       - ./wwwroot/站点目录:/var/www/html
     networks:

@@ -2,6 +2,7 @@ version: "3"
 
 services:
   web:
+    container_name: web
     build: ./nginx
     restart: always
     ports:
@@ -13,13 +14,24 @@ services:
       - ./wwwroot:/usr/share/nginx/html
     depends_on:
       - default
+      - default-cli
     networks:
       - site
   default:
+    container_name: default
     restart: always
-    build: ./fpm
+    image: flxxyz/php:7.3-fpm
     volumes:
       - ./wwwroot/default:/var/www/html
+    networks:
+      - site
+  default-cli:
+    container_name: default-cli
+    restart: always
+    image: flxxyz/php:7.3-cli
+    volumes:
+      - ./wwwroot/default-cli:/usr/src/myapp
+    command: php index.php
     networks:
       - site
 

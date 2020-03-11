@@ -1,2 +1,3 @@
 *.rule
 !default.rule
+!default-cli.rule

@@ -53,7 +53,8 @@ RUN apk add --no-cache gcc \
 # sed -i 's/rm -rf/cd \/usr\/src\n                ls -al/' $(which docker-php-source); \
 
 # BUG: 进行‘rm -rf’操作会造成目录不为空的错误，“Storage Driver”的问题
-RUN tac $(which docker-php-ext-install) | sed '1,3d' | tac > $(which docker-php-ext-install); \
+RUN sed -i 's/rm -rf "$dir"/rm -rf "$dir/*"\n        ls -al "$dir"/' $(which docker-php-source); \
+    apk add --no-cache libxml2-dev libzip-dev; \
     docker-php-ext-install -j$(nproc) bcmath \
     pdo_mysql \
     mysqli \
@@ -61,5 +62,6 @@ RUN tac $(which docker-php-ext-install) | sed '1,3d' | tac > $(which docker-php-
     tokenizer \
     zip \
     opcache; \
-    ls -al /usr/src; \
-    rm -rf /usr/src/php;
+    echo 'ok';
+
+EXPOSE 9000

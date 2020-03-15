@@ -52,8 +52,8 @@ RUN apk add --no-cache g++ \
     && docker-php-ext-enable swoole \
     && apk del g++
 
-RUN tac $(which docker-php-ext-install) | sed '1,3d' | tac > $(which docker-php-ext-install); \
-    apk add --no-cache libxml2-dev \
+RUN sed -i 's/rm -rf "$dir"/rm -rf "$dir/*"\n        ls -al "$dir"/' $(which docker-php-source); \
+    apk add --no-cache libxml2-dev libzip-dev; \
     docker-php-ext-install -j$(nproc) bcmath \
     pdo_mysql \
     mysqli \
@@ -61,7 +61,6 @@ RUN tac $(which docker-php-ext-install) | sed '1,3d' | tac > $(which docker-php-
     tokenizer \
     zip \
     opcache; \
-    ls -al /usr/src; \
-    rm -rf /usr/src/php;
+    echo 'ok';
 
 EXPOSE 9501 9502 9503

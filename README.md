@@ -48,6 +48,75 @@ server
 }
 ```
 
+## 数据库
+### mariadb
+```
+db:
+  container_name: db
+  restart: always
+  image: mariadb:10.5.1-bionic
+  environment:
+    MYSQL_ROOT_PASSWORD: 12345678
+  volumes:
+    - 数据目录:/var/lib/mysql
+  networks:
+    - site
+```
+
+> 更多设置请查看[mariadb说明](https://hub.docker.com/_/mariadb)
+
+### mongo
+```
+db:
+  container_name: db
+  restart: always
+  image: mongo:4.2.3-bionic
+  environment:
+    MONGO_INITDB_ROOT_USERNAME: root
+    MONGO_INITDB_ROOT_PASSWORD: 12345678
+  volumes:
+    - 数据目录:/data/db
+  networks:
+    - site
+```
+> 更多设置请查看[mongo说明](https://hub.docker.com/_/mongo)
+
+
+## 缓存
+### redis
+```
+cache:
+  container_name: cache
+  restart: always
+  image: redis:5.0.7-alpine
+  networks:
+    - site
+```
+
+#### 持久化存储
+```
+volumes:
+  - 数据目录:/data
+command: redis-server --appendonly yes
+```
+> 更多设置请查看[redis说明](https://hub.docker.com/_/redis)
+
+### memcached
+```
+cache:
+  container_name: cache
+  restart: always
+  image: memcached:1.6.0-alpine
+  networks:
+    - site
+```
+
+#### 设置使用内存大小
+```
+command: memcached -m 64
+```
+> 更多设置请查看[mamcached说明](https://hub.docker.com/_/memcached)
+
 ## 配置实例时使用的版本
 ### docker
 > version: 19.03.7

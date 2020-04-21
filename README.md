@@ -119,7 +119,7 @@ command: memcached -m 64
 
 ## 配置实例时使用的版本
 ### docker
-> version: 19.03.7
+> version: 19.03.6
 
 #### docker-compose
 > version: 1.24.1  

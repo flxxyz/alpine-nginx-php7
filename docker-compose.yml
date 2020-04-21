@@ -3,13 +3,15 @@ version: "3"
 services:
   web:
     container_name: web
-    build: ./nginx
+    image: flxxyz/nginx:latest
     restart: always
     ports:
       - "80:80"
+      - "8080:8080"
       - "443:443"
     volumes:
-      - ./conf:/etc/nginx/conf.d
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/rewrite.d:/etc/nginx/rewrite.d
       - ./log:/var/log/nginx
       - ./wwwroot:/usr/share/nginx/html
     depends_on:
@@ -22,6 +24,7 @@ services:
     restart: always
     image: flxxyz/php:7.3-fpm
     volumes:
+      - ./wwwroot/default/conf/fpm.conf:/usr/local/etc/php-fpm.d/www.conf
       - ./wwwroot/default:/var/www/html
     networks:
       - site
@@ -30,7 +33,7 @@ services:
     restart: always
     image: flxxyz/php:7.3-cli
     volumes:
-      - ./wwwroot/default-cli:/usr/src/myapp
+      - ./wwwroot/default-cli/www:/usr/src/myapp
     command: php index.php
     networks:
       - site

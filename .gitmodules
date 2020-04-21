@@ -1,0 +1,6 @@
+[submodule "image/nginx"]
+	path = image/nginx
+	url = https://github.com/edog-docker/nginx
+[submodule "image/php"]
+	path = image/php
+	url = https://github.com/edog-docker/php

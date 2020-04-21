@@ -1,5 +1,9 @@
-location /
-{
+server {
+  listen 8080;
+  server_name _;
+
+  location /
+  {
     proxy_http_version 1.1;
     proxy_set_header   Host $host;
     proxy_set_header   X-Real-IP $remote_addr;
@@ -15,6 +19,10 @@ location /
     # proxy_set_header Connection "upgrade";
     if (!-f $request_filename)
     {
-        proxy_pass http://default-cli:9501;
+      proxy_pass http://default-cli:9501;
     }
+  }
+ 
+  error_log /var/log/nginx/default-cli.error.log;
+  access_log /var/log/nginx/default-cli.access.log;
 }

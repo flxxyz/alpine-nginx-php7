@@ -1,7 +1,7 @@
 ## 开始
 ### 拉取配置
 ```
-git clone https://github.com/flxxyz/alpine-nginx-php7.git && cd alpine-nginx-php7
+git clone https://github.com/flxxyz/fast-deploy-website.git && cd fast-deploy-website
 ```
 
 ### 启动实例

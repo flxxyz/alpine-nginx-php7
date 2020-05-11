@@ -34,7 +34,7 @@ services:
     image: flxxyz/php:7.3-cli
     volumes:
       - ./wwwroot/default-cli/www:/usr/src/myapp
-    command: php index.php
+    command: php /usr/src/myapp/index.php
     networks:
       - site
 

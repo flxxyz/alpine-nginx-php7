@@ -3,21 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>默认站点 - flxxyz/alpine-nginx-php7</title>
+    <title>默认站点 - flxxyz/fast-deploy-website</title>
 </head>
 <body>
     <div>
-        <h2>alpine-nginx-php7</h2>
-        <p>docker php多站点环境</p>
+        <h2>fast-deploy-website</h2>
+        <p>docker 快速部署多站点环境</p>
         <div>
             <p>
 <pre><code>
 # 添加到docker-compose.yml
 站点名称:
+    container_name: 站点名称
     restart: always
     image: flxxyz/php:7.3-fpm
     volumes:
       - ./wwwroot/站点名称:/var/www/html
+      - ./wwwroot/站点名称/conf/fpm.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./wwwroot/站点名称/conf/php.ini:/usr/local/etc/php/php.ini
     networks:
       - site
 </code>
@@ -27,11 +30,11 @@ server
 {
     listen 80;
     server_name example.com;  #注意修改域名
-    root /usr/share/nginx/html/站点名称;
+    root /usr/share/nginx/html/站点名称/www;
     index index.html index.htm index.php;
 
-    #也可以新建 站点名称.rule 文件到conf/rule.d目录统一管理
-    #include /etc/nginx/conf.d/rule.d/站点名称.rule;
+    #可以使用一些默认的 rewrite 规则(laravel, phpwind, thinkphp, typecho,wordpress), 使用自定义规则添加放置 nginx/rewrite.d 中
+    #include /etc/nginx/rewrite.d/typecho.rewrite;
 
     location ~ \.php$
     {
@@ -47,7 +50,7 @@ server
     </code></pre>
 </p>
         </div>
-        <p>Link: <a href="https://github.com/flxxyz/alpine-nginx-php7">flxxyz/alpine-nginx-php7</a></p>
+        <p>Link: <a href="https://github.com/flxxyz/fast-deploy-website">flxxyz/fast-deploy-website</a></p>
     </div>
 </body>
 </html>

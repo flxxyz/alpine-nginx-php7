@@ -25,6 +25,7 @@ services:
     image: flxxyz/php:7.3-fpm
     volumes:
       - ./wwwroot/default/conf/fpm.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./wwwroot/default/conf/php.ini:/usr/local/etc/php/php.ini
       - ./wwwroot/default:/var/www/html
     networks:
       - site

@@ -1,4 +1,4 @@
-version: "3"
+version: "3.7"
 
 services:
   web:
@@ -38,6 +38,17 @@ services:
     command: php /usr/src/myapp/index.php
     networks:
       - site
+  composer:
+    container_name: composer
+    image: composer:latest
+    volumes:
+      - ./wwwroot/default-cli/www:/app
+    command: composer install -vvvv
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 256M
 
 networks:
   site:

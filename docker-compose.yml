@@ -13,6 +13,10 @@ services:
       - ./nginx/rewrite.d:/etc/nginx/rewrite.d
       - ./log:/var/log/nginx
       - ./wwwroot:/usr/share/nginx/html
+    depends_on:
+      - default
+      - default-cli
+      - laravels
     networks:
       - site
   default:
@@ -38,15 +42,17 @@ services:
       - site
   composer:
     container_name: composer
-    image: composer:latest
+    image: flxxyz/php:7.3-cli
     volumes:
-      - ./wwwroot/default-cli/www:/app
-    command: composer install -vvvv
+      - ./wwwroot/default-cli/www:/usr/src/myapp
+    command: composer install -vvv
     deploy:
       resources:
         limits:
           cpus: '0.50'
           memory: 256M
+    networks:
+      - site
   laravels:
     container_name: laravels
     restart: always
@@ -55,22 +61,25 @@ services:
       - "8111:9502/tcp"
       - "8222:9503/udp"
     volumes:
-      - ./wwwroot/laravels/conf/php.ini:/usr/local/etc/php/php.ini
       - ./wwwroot/laravels/www:/usr/src/myapp
+    command: php bin/laravels start
     depends_on:
       - laravels-composer
-    command: php bin/laravels start
+    networks:
+      - site
   laravels-composer:
-    container_name: composer
-    image: composer:latest
+    container_name: laravels-composer
+    image: flxxyz/php:7.3-cli
     volumes:
-      - ./wwwroot/laravels/www:/app
-    command: composer install -vvvv
+      - ./wwwroot/laravels/www:/usr/src/myapp
+    command: composer install -vvv
     deploy:
       resources:
         limits:
           cpus: '0.50'
           memory: 256M
+    networks:
+      - site
 
 networks:
   site:

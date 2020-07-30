@@ -24,7 +24,7 @@ $httpPort->set([
     'open_http_protocol' => true,
     'open_websocket_protocol' => false,
 ]);
-$httpPort->on('request', function ($request, $response) use ($server, $info) {
+$httpPort->on('request', function ($request, $response) use ($server) {
     if ($request->server['path_info'] == '/favicon.ico' || $request->server['request_uri'] == '/favicon.ico') {
         $response->end();
         return;

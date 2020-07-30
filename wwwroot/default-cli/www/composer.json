@@ -1,5 +1,11 @@
 {
     "require-dev": {
         "eaglewu/swoole-ide-helper": "dev-master"
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://mirrors.aliyun.com/composer/"
+        }
     }
 }

@@ -69,7 +69,27 @@ default-cli:
       - site
 ```
 
+### 使用laravelS
+```
+laravels:
+    container_name: laravels
+    restart: always
+    image: flxxyz/php:7.3-cli
+    ports:
+      - "自定义TCP端口:9502/tcp"
+      - "自定义UDP端口:9503/udp"
+    volumes:
+      - ./wwwroot/laravels/www:/usr/src/myapp
+    command: php bin/laravels start
+    networks:
+      - site
+```
+> 具体代码可查看 [docker-compose.yml](https://github.com/flxxyz/fast-deploy-website/blob/master/docker-compose.yml)，如何实现TCP,UDP,Websocket相关功能查看 [app/Services](https://github.com/flxxyz/fast-deploy-website/tree/master/wwwroot/laravels/www/app/Services)
+
+
 ### composer安装依赖
+> flxxyz/php:7.3-cli 容器已集成composer
+
 添加一个composer实例映射需要执行的路径
 ```
 composer:
@@ -86,11 +106,13 @@ composer:
 [flxxyz/nginx:latest](https://github.com/edogDocker/nginx/blob/master/Dockerfile) 默认安装
 
 ### 一些额外的php扩展
+- inotify
 - memcached
 - mongodb
 - mysqli
 - mysqlnd
 - opcache
+- pcntl
 - pdo_mysql
 - pdo_sqlite
 - readline
@@ -173,7 +195,7 @@ command: memcached -m 64
 
 ## 配置实例时使用的版本
 ### docker
-> version: 19.03.6
+> version: 19.03.12
 
 #### docker-compose
 > version: 1.24.1  

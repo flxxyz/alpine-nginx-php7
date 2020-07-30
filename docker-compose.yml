@@ -7,16 +7,12 @@ services:
     restart: always
     ports:
       - "80:80"
-      - "8080:8080"
       - "443:443"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/rewrite.d:/etc/nginx/rewrite.d
       - ./log:/var/log/nginx
       - ./wwwroot:/usr/share/nginx/html
-    depends_on:
-      - default
-      - default-cli
     networks:
       - site
   default:
@@ -35,6 +31,8 @@ services:
     image: flxxyz/php:7.3-cli
     volumes:
       - ./wwwroot/default-cli/www:/usr/src/myapp
+    depends_on:
+      - composer
     command: php /usr/src/myapp/index.php
     networks:
       - site
@@ -43,6 +41,30 @@ services:
     image: composer:latest
     volumes:
       - ./wwwroot/default-cli/www:/app
+    command: composer install -vvvv
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 256M
+  laravels:
+    container_name: laravels
+    restart: always
+    image: flxxyz/php:7.3-cli
+    ports:
+      - "8111:9502/tcp"
+      - "8222:9503/udp"
+    volumes:
+      - ./wwwroot/laravels/conf/php.ini:/usr/local/etc/php/php.ini
+      - ./wwwroot/laravels/www:/usr/src/myapp
+    depends_on:
+      - laravels-composer
+    command: php bin/laravels start
+  laravels-composer:
+    container_name: composer
+    image: composer:latest
+    volumes:
+      - ./wwwroot/laravels/www:/app
     command: composer install -vvvv
     deploy:
       resources:

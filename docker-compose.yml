@@ -3,7 +3,7 @@ version: "3.7"
 services:
   web:
     container_name: web
-    image: flxxyz/nginx:latest
+    image: flxxyz/nginx:stable
     restart: always
     ports:
       - "80:80"

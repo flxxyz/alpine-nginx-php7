@@ -57,6 +57,7 @@ server
 ```
 
 ### 添加CLI应用
+> CLI容器开放端口 9000-9050
 ```
 default-cli:
     container_name: default-cli
@@ -76,8 +77,8 @@ laravels:
     restart: always
     image: flxxyz/php:7.3-cli
     ports:
-      - "自定义TCP端口:9502/tcp"
-      - "自定义UDP端口:9503/udp"
+      - "自定义TCP本地端口:9001/tcp"
+      - "自定义UDP本地端口:9002/udp"
     volumes:
       - ./wwwroot/laravels/www:/usr/src/myapp
     command: php bin/laravels start
@@ -103,26 +104,41 @@ composer:
 ```
 
 ### ngx-fancyindex
-[flxxyz/nginx:latest](https://github.com/edogDocker/nginx/blob/master/Dockerfile) 默认安装
+[flxxyz/nginx](https://github.com/edogDocker/nginx/blob/master/Dockerfile) 所有tag默认安装
 
 ### 一些额外的php扩展
+- bcmath
+- gd
 - inotify
+- intl
+- libxml
+- mcrypt
 - memcached
 - mongodb
 - mysqli
 - mysqlnd
+- openssl
+- pcntl
 - opcache
 - pcntl
 - pdo_mysql
 - pdo_sqlite
 - readline
 - redis
+- SimpleXML
+- soap
+- sockets
 - sqlite3
+- standard
 - swoole (仅 [flxxyz/php:7.3-cli](https://github.com/edogDocker/php/blob/master/cli/Dockerfile) 安装)
+- xml
 - xmlrpc
+- xmlwriter
+- xsl
 - tokenizer
 - yaml
 - zip
+- zlib
 
 ## 数据库
 ### mariadb

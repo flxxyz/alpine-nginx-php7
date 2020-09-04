@@ -26,7 +26,7 @@ return [
     'sockets'                  => [
         [
             'host' => '0.0.0.0',
-            'port' => 9502,
+            'port' => 9001,
             'type' => SWOOLE_SOCK_TCP,
             'settings' => [
                 'open_eof_check' => true,
@@ -37,7 +37,7 @@ return [
         ],
         [
             'host' => '0.0.0.0',
-            'port' => 9503,
+            'port' => 9002,
             'type' => SWOOLE_SOCK_UDP,
             'settings' => [
                 'open_eof_check' => true,

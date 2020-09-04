@@ -3,7 +3,7 @@ version: "3.7"
 services:
   web:
     container_name: web
-    image: flxxyz/nginx:latest
+    image: flxxyz/nginx:stable
     restart: always
     ports:
       - "80:80"
@@ -58,8 +58,8 @@ services:
     restart: always
     image: flxxyz/php:7.3-cli
     ports:
-      - "8111:9502/tcp"
-      - "8222:9503/udp"
+      - "8111:9001/tcp"
+      - "8222:9002/udp"
     volumes:
       - ./wwwroot/laravels/www:/usr/src/myapp
     command: php bin/laravels start

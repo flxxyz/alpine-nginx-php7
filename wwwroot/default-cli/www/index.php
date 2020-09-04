@@ -1,6 +1,6 @@
 <?php
 
-$server = new Swoole\WebSocket\Server("0.0.0.0", 9502);
+$server = new Swoole\WebSocket\Server("0.0.0.0", 9001);
 $server->set([
     'daemonize' => false,
     'open_websocket_close_frame' => true,
@@ -19,7 +19,7 @@ $server->on('message', function ($serv, $frame) {
 $server->on('close', function ($ser, $fd) {
 });
 
-$httpPort = $server->listen('0.0.0.0', 9501, SWOOLE_SOCK_TCP);
+$httpPort = $server->listen('0.0.0.0', 9000, SWOOLE_SOCK_TCP);
 $httpPort->set([
     'open_http_protocol' => true,
     'open_websocket_protocol' => false,

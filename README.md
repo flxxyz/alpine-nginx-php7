@@ -146,11 +146,11 @@ composer:
 db:
   container_name: db
   restart: always
-  image: mariadb:10.5.1-bionic
+  image: mariadb:10.5-focal
   environment:
     MYSQL_ROOT_PASSWORD: 12345678
   volumes:
-    - 数据目录:/var/lib/mysql
+    - ./database/mariadb:/var/lib/mysql
   networks:
     - site
 ```
@@ -162,12 +162,12 @@ db:
 db:
   container_name: db
   restart: always
-  image: mongo:4.2.3-bionic
+  image: mongo:4.4-bionic
   environment:
     MONGO_INITDB_ROOT_USERNAME: root
     MONGO_INITDB_ROOT_PASSWORD: 12345678
   volumes:
-    - 数据目录:/data/db
+    - ./database/mongo:/data/db
   networks:
     - site
 ```
@@ -180,7 +180,7 @@ db:
 cache:
   container_name: cache
   restart: always
-  image: redis:5.0.7-alpine
+  image: redis:6-alpine
   networks:
     - site
 ```
@@ -188,7 +188,7 @@ cache:
 #### 持久化存储
 ```
 volumes:
-  - 数据目录:/data
+  - ./database/redis:/data
 command: redis-server --appendonly yes
 ```
 > 更多设置请查看[redis说明](https://hub.docker.com/_/redis)
@@ -198,7 +198,7 @@ command: redis-server --appendonly yes
 cache:
   container_name: cache
   restart: always
-  image: memcached:1.6.0-alpine
+  image: memcached:1.6-alpine
   networks:
     - site
 ```
@@ -209,11 +209,105 @@ command: memcached -m 64
 ```
 > 更多设置请查看[mamcached说明](https://hub.docker.com/_/memcached)
 
+
+## 搜索引擎
+### elasticsearch
+```
+es01:
+  container_name: es01
+  restart: always
+  image: elasticsearch:7.9.0
+  environment:
+    - node.name=es01
+    - cluster.name=es-docker-cluster
+    - discovery.seed_hosts=es02
+    - cluster.initial_master_nodes=es01,es02
+    - bootstrap.memory_lock=true
+    - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+  ulimits:
+    memlock:
+      soft: -1
+      hard: -1
+  volumes:
+    - ./database/es/node01:/usr/share/elasticsearch/data
+  ports:
+    - "9200:9200"
+    - "9300:9300"
+  networks:
+    - site
+es02:
+  container_name: es02
+  restart: always
+  image: elasticsearch:7.9.1
+  environment:
+    - node.name=es02
+    - cluster.name=es-docker-cluster
+    - discovery.seed_hosts=es01
+    - cluster.initial_master_nodes=es01,es02
+    - bootstrap.memory_lock=true
+    - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+  ulimits:
+    memlock:
+      soft: -1
+      hard: -1
+  volumes:
+    - ./database/es/node02:/usr/share/elasticsearchdata
+  networks:
+    - site
+```
+> 更多设置请查看[elasticsearch说明](https://hub.docker.com/_/elasticsearch)
+
+> [使用Docker安装Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/7.5/docker.html)
+
+
+## 消息队列
+### rabbitmq
+```
+amqp:
+  container_name: amqp
+  restart: always
+  image: rabbitmq:3.8
+  environment:
+    - RABBITMQ_DEFAULT_USER=amqp
+    - RABBITMQ_DEFAULT_PASS=12345678
+  volumes:
+   - ./database/amqp:/var/lib/rabbitmq
+  ports:
+    - "15672:15672"
+  networks:
+    - site
+```
+> 更多设置请查看[rabbitmq说明](https://hub.docker.com/_/rabbitmq)
+
+## DNS
+### pi-hole
+```
+dns:
+  container_name: dns
+  restart: unless-stopped
+  image: pihole/pihole:latest
+  environment:
+    - TZ='Asia/Shanghai'
+    - WEBPASSWORD=12345678
+  volumes:
+    - ./database/pihole/:/etc/pihole/:z
+    - ./database/dnsmasq.d/:/etc/dnsmasq.d/:z
+  ports:
+    - "53:53/tcp"
+    - "53:53/udp"
+    - "67:67/udp"
+    - "9080:80"
+    - "9443:443"
+  networks:
+    - site
+```
+> 更多设置请查看[pihole说明](https://hub.docker.com/r/pihole/pihole)
+
 ## 配置实例时使用的版本
 ### docker
 > version: 19.03.12
 
 #### docker-compose
-> version: 1.24.1  
+> version: 1.24.2
 > compose file format: 3.7
 

@@ -146,7 +146,7 @@ composer:
 db:
   container_name: db
   restart: always
-  image: mariadb:10.5.1-bionic
+  image: mariadb:10.5-focal
   environment:
     MYSQL_ROOT_PASSWORD: 12345678
   volumes:
@@ -162,7 +162,7 @@ db:
 db:
   container_name: db
   restart: always
-  image: mongo:4.2.3-bionic
+  image: mongo:4.4-bionic
   environment:
     MONGO_INITDB_ROOT_USERNAME: root
     MONGO_INITDB_ROOT_PASSWORD: 12345678
@@ -180,7 +180,7 @@ db:
 cache:
   container_name: cache
   restart: always
-  image: redis:5.0.7-alpine
+  image: redis:6-alpine
   networks:
     - site
 ```
@@ -198,7 +198,7 @@ command: redis-server --appendonly yes
 cache:
   container_name: cache
   restart: always
-  image: memcached:1.6.0-alpine
+  image: memcached:1.6-alpine
   networks:
     - site
 ```
@@ -214,6 +214,6 @@ command: memcached -m 64
 > version: 19.03.12
 
 #### docker-compose
-> version: 1.24.1  
+> version: 1.24.2
 > compose file format: 3.7
 
